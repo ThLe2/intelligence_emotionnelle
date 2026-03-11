@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Quotient Émotionnel (QE)</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f3e8ff, #e0f2fe);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .header {
+            background: linear-gradient(90deg, #7e22ce, #4f46e5);
+            color: white;
+            padding: 24px 32px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            font-weight: bold;
+            margin: 0;
+        }
+        .content {
+            padding: 32px;
+            color: #374151;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #e5e7eb;
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background: #f3e8ff;
+            font-weight: bold;
+        }
+        .question {
+            text-align: left;
+            font-weight: 500;
+        }
+        input[type="radio"] {
+            margin: 0 8px;
+        }
+        button {
+            background: #7e22ce;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+        button:hover {
+            background: #6b21a8;
+        }
+        .results {
+            display: none;
+            margin-top: 20px;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 12px;
+        }
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        .results-table th, .results-table td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+        .results-table th {
+            background: #f3e8ff;
+        }
+        .interpretation {
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .high { background: #d1fae5; color: #065f46; }
+        .medium { background: #fef3c7; color: #92400e; }
+        .low { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Test de Quotient Émotionnel (QE)</h1>
+            <p>Cochez le score qui vous correspond le plus</p>
+        </div>
+        <div class="content">
+            <form id="qeForm">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="question">Questions</th>
+                            <th>1<br><small>Presque jamais</small></th>
+                            <th>2<br><small>Rarement</small></th>
+                            <th>3<br><small>Quelques fois</small></th>
+                            <th>4<br><small>Assez souvent</small></th>
+                            <th>5<br><small>Très souvent</small></th>
+                            <th>6<br><small>Presque toujours</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="question">Pendant mes activités je suis conscient de ma respiration.</td>
+                            <td><input type="radio" name="q1" value="1" required></td>
+                            <td><input type="radio" name="q1" value="2"></td>
+                            <td><input type="radio" name="q1" value="3"></td>
+                            <td><input type="radio" name="q1" value="4"></td>
+                            <td><input type="radio" name="q1" value="5"></td>
+                            <td><input type="radio" name="q1" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Lorsque quelqu'un ne se sent pas bien, je me rends compte tout de suite même s'il ne me le dit pas.</td>
+                            <td><input type="radio" name="q2" value="1" required></td>
+                            <td><input type="radio" name="q2" value="2"></td>
+                            <td><input type="radio" name="q2" value="3"></td>
+                            <td><input type="radio" name="q2" value="4"></td>
+                            <td><input type="radio" name="q2" value="5"></td>
+                            <td><input type="radio" name="q2" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand quelque chose ne me convient pas je suis capable de le dire.</td>
+                            <td><input type="radio" name="q3" value="1" required></td>
+                            <td><input type="radio" name="q3" value="2"></td>
+                            <td><input type="radio" name="q3" value="3"></td>
+                            <td><input type="radio" name="q3" value="4"></td>
+                            <td><input type="radio" name="q3" value="5"></td>
+                            <td><input type="radio" name="q3" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Les personnes qui m'entourent viennent facilement se confier et me parler de ce qu'elles ressentent.</td>
+                            <td><input type="radio" name="q4" value="1" required></td>
+                            <td><input type="radio" name="q4" value="2"></td>
+                            <td><input type="radio" name="q4" value="3"></td>
+                            <td><input type="radio" name="q4" value="4"></td>
+                            <td><input type="radio" name="q4" value="5"></td>
+                            <td><input type="radio" name="q4" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je suis capable de repérer ce qui est à l'origine d'une émotion.</td>
+                            <td><input type="radio" name="q5" value="1" required></td>
+                            <td><input type="radio" name="q5" value="2"></td>
+                            <td><input type="radio" name="q5" value="3"></td>
+                            <td><input type="radio" name="q5" value="4"></td>
+                            <td><input type="radio" name="q5" value="5"></td>
+                            <td><input type="radio" name="q5" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je sais identifier ce que les autres ressentent.</td>
+                            <td><input type="radio" name="q6" value="1" required></td>
+                            <td><input type="radio" name="q6" value="2"></td>
+                            <td><input type="radio" name="q6" value="3"></td>
+                            <td><input type="radio" name="q6" value="4"></td>
+                            <td><input type="radio" name="q6" value="5"></td>
+                            <td><input type="radio" name="q6" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Face à quelqu'un qui m'agresse je cherche à comprendre ce qui se passe.</td>
+                            <td><input type="radio" name="q7" value="1" required></td>
+                            <td><input type="radio" name="q7" value="2"></td>
+                            <td><input type="radio" name="q7" value="3"></td>
+                            <td><input type="radio" name="q7" value="4"></td>
+                            <td><input type="radio" name="q7" value="5"></td>
+                            <td><input type="radio" name="q7" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Dans mes relations personnelles et professionnelles je m'adapte facilement aux émotions des autres.</td>
+                            <td><input type="radio" name="q8" value="1" required></td>
+                            <td><input type="radio" name="q8" value="2"></td>
+                            <td><input type="radio" name="q8" value="3"></td>
+                            <td><input type="radio" name="q8" value="4"></td>
+                            <td><input type="radio" name="q8" value="5"></td>
+                            <td><input type="radio" name="q8" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">J’arrive facilement à canaliser mes émotions et à les orienter vers des choses constructives pour moi et les autres.</td>
+                            <td><input type="radio" name="q9" value="1" required></td>
+                            <td><input type="radio" name="q9" value="2"></td>
+                            <td><input type="radio" name="q9" value="3"></td>
+                            <td><input type="radio" name="q9" value="4"></td>
+                            <td><input type="radio" name="q9" value="5"></td>
+                            <td><input type="radio" name="q9" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Lorsque je ne suis pas du même avis que quelqu'un d'autre je suis capable de lui dire sans affrontement.</td>
+                            <td><input type="radio" name="q10" value="1" required></td>
+                            <td><input type="radio" name="q10" value="2"></td>
+                            <td><input type="radio" name="q10" value="3"></td>
+                            <td><input type="radio" name="q10" value="4"></td>
+                            <td><input type="radio" name="q10" value="5"></td>
+                            <td><input type="radio" name="q10" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand j'ai une critique à adresser à quelqu'un et que je sais qu'il peut réagir émotionnellement, je trouve facilement une façon adaptée de lui présenter la chose.</td>
+                            <td><input type="radio" name="q11" value="1" required></td>
+                            <td><input type="radio" name="q11" value="2"></td>
+                            <td><input type="radio" name="q11" value="3"></td>
+                            <td><input type="radio" name="q11" value="4"></td>
+                            <td><input type="radio" name="q11" value="5"></td>
+                            <td><input type="radio" name="q11" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je suis optimiste et je positive quoi qu'il m'arrive.</td>
+                            <td><input type="radio" name="q12" value="1" required></td>
+                            <td><input type="radio" name="q12" value="2"></td>
+                            <td><input type="radio" name="q12" value="3"></td>
+                            <td><input type="radio" name="q12" value="4"></td>
+                            <td><input type="radio" name="q12" value="5"></td>
+                            <td><input type="radio" name="q12" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand mes collègues, mes enfants, mes amis ou mon conjoint ont réalisé quelque chose je les félicite.</td>
+                            <td><input type="radio" name="q13" value="1" required></td>
+                            <td><input type="radio" name="q13" value="2"></td>
+                            <td><input type="radio" name="q13" value="3"></td>
+                            <td><input type="radio" name="q13" value="4"></td>
+                            <td><input type="radio" name="q13" value="5"></td>
+                            <td><input type="radio" name="q13" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand quelque chose m'arrive, j'identifie clairement l'émotion que j'éprouve : peur, colère, tristesse, joie.</td>
+                            <td><input type="radio" name="q14" value="1" required></td>
+                            <td><input type="radio" name="q14" value="2"></td>
+                            <td><input type="radio" name="q14" value="3"></td>
+                            <td><input type="radio" name="q14" value="4"></td>
+                            <td><input type="radio" name="q14" value="5"></td>
+                            <td><input type="radio" name="q14" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je perçois facilement les émotions des autres dans le cadre de mes relations professionnelles ou personnelles.</td>
+                            <td><input type="radio" name="q15" value="1" required></td>
+                            <td><input type="radio" name="q15" value="2"></td>
+                            <td><input type="radio" name="q15" value="3"></td>
+                            <td><input type="radio" name="q15" value="4"></td>
+                            <td><input type="radio" name="q15" value="5"></td>
+                            <td><input type="radio" name="q15" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je parle facilement de moi et de mes émotions.</td>
+                            <td><input type="radio" name="q16" value="1" required></td>
+                            <td><input type="radio" name="q16" value="2"></td>
+                            <td><input type="radio" name="q16" value="3"></td>
+                            <td><input type="radio" name="q16" value="4"></td>
+                            <td><input type="radio" name="q16" value="5"></td>
+                            <td><input type="radio" name="q16" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Lors des échanges, j'arrive facilement à aider les autres à exprimer leurs émotions.</td>
+                            <td><input type="radio" name="q17" value="1" required></td>
+                            <td><input type="radio" name="q17" value="2"></td>
+                            <td><input type="radio" name="q17" value="3"></td>
+                            <td><input type="radio" name="q17" value="4"></td>
+                            <td><input type="radio" name="q17" value="5"></td>
+                            <td><input type="radio" name="q17" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand je ne me sens pas bien, je sais très vite pourquoi.</td>
+                            <td><input type="radio" name="q18" value="1" required></td>
+                            <td><input type="radio" name="q18" value="2"></td>
+                            <td><input type="radio" name="q18" value="3"></td>
+                            <td><input type="radio" name="q18" value="4"></td>
+                            <td><input type="radio" name="q18" value="5"></td>
+                            <td><input type="radio" name="q18" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand quelqu'un me parle de ses émotions, je comprends rapidement ce qui lui arrive.</td>
+                            <td><input type="radio" name="q19" value="1" required></td>
+                            <td><input type="radio" name="q19" value="2"></td>
+                            <td><input type="radio" name="q19" value="3"></td>
+                            <td><input type="radio" name="q19" value="4"></td>
+                            <td><input type="radio" name="q19" value="5"></td>
+                            <td><input type="radio" name="q19" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand les choses ne vont pas bien, je suis capable de supporter la frustration.</td>
+                            <td><input type="radio" name="q20" value="1" required></td>
+                            <td><input type="radio" name="q20" value="2"></td>
+                            <td><input type="radio" name="q20" value="3"></td>
+                            <td><input type="radio" name="q20" value="4"></td>
+                            <td><input type="radio" name="q20" value="5"></td>
+                            <td><input type="radio" name="q20" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand quelqu'un me confie ses problèmes et ses émotions, j'arrive bien à l'aider à mieux gérer la situation.</td>
+                            <td><input type="radio" name="q21" value="1" required></td>
+                            <td><input type="radio" name="q21" value="2"></td>
+                            <td><input type="radio" name="q21" value="3"></td>
+                            <td><input type="radio" name="q21" value="4"></td>
+                            <td><input type="radio" name="q21" value="5"></td>
+                            <td><input type="radio" name="q21" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Mes émotions sont comme un radar, elles me guident dans ma vie et je me fie à ce que je ressens.</td>
+                            <td><input type="radio" name="q22" value="1" required></td>
+                            <td><input type="radio" name="q22" value="2"></td>
+                            <td><input type="radio" name="q22" value="3"></td>
+                            <td><input type="radio" name="q22" value="4"></td>
+                            <td><input type="radio" name="q22" value="5"></td>
+                            <td><input type="radio" name="q22" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Lorsque je suis en conflit je cherche à résoudre ce qui m'oppose à l'autre.</td>
+                            <td><input type="radio" name="q24" value="1" required></td>
+                            <td><input type="radio" name="q24" value="2"></td>
+                            <td><input type="radio" name="q24" value="3"></td>
+                            <td><input type="radio" name="q24" value="4"></td>
+                            <td><input type="radio" name="q24" value="5"></td>
+                            <td><input type="radio" name="q24" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Devant mes erreurs je suis capable de relativiser et d'en tirer la leçon.</td>
+                            <td><input type="radio" name="q25" value="1" required></td>
+                            <td><input type="radio" name="q25" value="2"></td>
+                            <td><input type="radio" name="q25" value="3"></td>
+                            <td><input type="radio" name="q25" value="4"></td>
+                            <td><input type="radio" name="q25" value="5"></td>
+                            <td><input type="radio" name="q25" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je sais créer une ambiance chaleureuse.</td>
+                            <td><input type="radio" name="q26" value="1" required></td>
+                            <td><input type="radio" name="q26" value="2"></td>
+                            <td><input type="radio" name="q26" value="3"></td>
+                            <td><input type="radio" name="q26" value="4"></td>
+                            <td><input type="radio" name="q26" value="5"></td>
+                            <td><input type="radio" name="q26" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">J'écoute les autres avec empathie.</td>
+                            <td><input type="radio" name="q27" value="1" required></td>
+                            <td><input type="radio" name="q27" value="2"></td>
+                            <td><input type="radio" name="q27" value="3"></td>
+                            <td><input type="radio" name="q27" value="4"></td>
+                            <td><input type="radio" name="q27" value="5"></td>
+                            <td><input type="radio" name="q27" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je repère facilement les émotions des autres : la tristesse, la peur, la colère, la joie.</td>
+                            <td><input type="radio" name="q28" value="1" required></td>
+                            <td><input type="radio" name="q28" value="2"></td>
+                            <td><input type="radio" name="q28" value="3"></td>
+                            <td><input type="radio" name="q28" value="4"></td>
+                            <td><input type="radio" name="q28" value="5"></td>
+                            <td><input type="radio" name="q28" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Dans mes relations professionnelles et familiales je parle volontiers de ce que je ressens.</td>
+                            <td><input type="radio" name="q29" value="1" required></td>
+                            <td><input type="radio" name="q29" value="2"></td>
+                            <td><input type="radio" name="q29" value="3"></td>
+                            <td><input type="radio" name="q29" value="4"></td>
+                            <td><input type="radio" name="q29" value="5"></td>
+                            <td><input type="radio" name="q29" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Lors des discussions, je porte une attention particulière aux émotions que l'autre exprime.</td>
+                            <td><input type="radio" name="q30" value="1" required></td>
+                            <td><input type="radio" name="q30" value="2"></td>
+                            <td><input type="radio" name="q30" value="3"></td>
+                            <td><input type="radio" name="q30" value="4"></td>
+                            <td><input type="radio" name="q30" value="5"></td>
+                            <td><input type="radio" name="q30" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je sais facilement pourquoi je ressens telle ou telle émotion.</td>
+                            <td><input type="radio" name="q31" value="1" required></td>
+                            <td><input type="radio" name="q31" value="2"></td>
+                            <td><input type="radio" name="q31" value="3"></td>
+                            <td><input type="radio" name="q31" value="4"></td>
+                            <td><input type="radio" name="q31" value="5"></td>
+                            <td><input type="radio" name="q31" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je sais facilement pourquoi une personne est triste, contrariée, en colère ou a peur.</td>
+                            <td><input type="radio" name="q32" value="1" required></td>
+                            <td><input type="radio" name="q32" value="2"></td>
+                            <td><input type="radio" name="q32" value="3"></td>
+                            <td><input type="radio" name="q32" value="4"></td>
+                            <td><input type="radio" name="q32" value="5"></td>
+                            <td><input type="radio" name="q32" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Dans les situations à haut risque émotionnel, je sais que je vais pouvoir me contrôler.</td>
+                            <td><input type="radio" name="q33" value="1" required></td>
+                            <td><input type="radio" name="q33" value="2"></td>
+                            <td><input type="radio" name="q33" value="3"></td>
+                            <td><input type="radio" name="q33" value="4"></td>
+                            <td><input type="radio" name="q33" value="5"></td>
+                            <td><input type="radio" name="q33" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Face à une émotion forte d'autrui, je garde mon calme et je contrôle la situation.</td>
+                            <td><input type="radio" name="q34" value="1" required></td>
+                            <td><input type="radio" name="q34" value="2"></td>
+                            <td><input type="radio" name="q34" value="3"></td>
+                            <td><input type="radio" name="q34" value="4"></td>
+                            <td><input type="radio" name="q34" value="5"></td>
+                            <td><input type="radio" name="q34" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Je réalise les buts et les objectifs que je me fixe.</td>
+                            <td><input type="radio" name="q35" value="1" required></td>
+                            <td><input type="radio" name="q35" value="2"></td>
+                            <td><input type="radio" name="q35" value="3"></td>
+                            <td><input type="radio" name="q35" value="4"></td>
+                            <td><input type="radio" name="q35" value="5"></td>
+                            <td><input type="radio" name="q35" value="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="question">Quand j'ai réussi quelque chose, je suis capable de me féliciter.</td>
+                            <td><input type="radio" name="q36" value="1" required></td>
+                            <td><input type="radio" name="q36" value="2"></td>
+                            <td><input type="radio" name="q36" value="3"></td>
+                            <td><input type="radio" name="q36" value="4"></td>
+                            <td><input type="radio" name="q36" value="5"></td>
+                            <td><input type="radio" name="q36" value="6"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" onclick="calculateQE()">Calculer mon QE</button>
+            </form>
+
+            <div id="results" class="results">
+                <h2>Vos Résultats</h2>
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Compétence émotionnelle</th>
+                            <th>Score "Soi"</th>
+                            <th>Score "Avec l'autre"</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. La conscience émotionnelle</td>
+                            <td id="soi1">--</td>
+                            <td id="autre1">--</td>
+                            <td id="total1">--</td>
+                        </tr>
+                        <tr>
+                            <td>2. L'expression émotionnelle</td>
+                            <td id="soi2">--</td>
+                            <td id="autre2">--</td>
+                            <td id="total2">--</td>
+                        </tr>
+                        <tr>
+                            <td>3. La compréhension émotionnelle</td>
+                            <td id="soi3">--</td>
+                            <td id="autre3">--</td>
+                            <td id="total3">--</td>
+                        </tr>
+                        <tr>
+                            <td>4. La maîtrise émotionnelle</td>
+                            <td id="soi4">--</td>
+                            <td id="autre4">--</td>
+                            <td id="total4">--</td>
+                        </tr>
+                        <tr>
+                            <td>5. L'utilisation émotionnelle</td>
+                            <td id="soi5">--</td>
+                            <td id="autre5">--</td>
+                            <td id="total5">--</td>
+                        </tr>
+                        <tr>
+                            <td>6. L'équilibre et l'harmonie émotionnelle</td>
+                            <td id="soi6">--</td>
+                            <td id="autre6">--</td>
+                            <td id="total6">--</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3"><strong>TOTAL GLOBAL : <span id="globalTotal">--</span>/216</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div id="interpretation" class="interpretation">--</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function calculateQE() {
+            // Récupérer toutes les réponses
+            const form = document.getElementById('qeForm');
+            const formData = new FormData(form);
+            const answers = {};
+            for (let [name, value] of formData.entries()) {
+                answers[name] = parseInt(value);
+            }
+
+            // Calculer les scores par compétence
+            const soi1 = (answers.q1 || 0) + (answers.q5 || 0) + (answers.q27 || 0);
+            const autre1 = (answers.q2 || 0) + (answers.q6 || 0) + (answers.q15 || 0);
+            const total1 = soi1 + autre1;
+
+            const soi2 = (answers.q3 || 0) + (answers.q16 || 0) + (answers.q29 || 0);
+            const autre2 = (answers.q4 || 0) + (answers.q17 || 0) + (answers.q30 || 0);
+            const total2 = soi2 + autre2;
+
+            const soi3 = (answers.q5 || 0) + (answers.q18 || 0) + (answers.q31 || 0);
+            const autre3 = (answers.q6 || 0) + (answers.q19 || 0) + (answers.q32 || 0);
+            const total3 = soi3 + autre3;
+
+            const soi4 = (answers.q7 || 0) + (answers.q20 || 0) + (answers.q33 || 0);
+            const autre4 = (answers.q8 || 0) + (answers.q21 || 0) + (answers.q34 || 0);
+            const total4 = soi4 + autre4;
+
+            const soi5 = (answers.q9 || 0) + (answers.q22 || 0) + (answers.q35 || 0);
+            const autre5 = (answers.q10 || 0) + (answers.q11 || 0) + (answers.q13 || 0);
+            const total5 = soi5 + autre5;
+
+            const soi6 = (answers.q12 || 0) + (answers.q24 || 0) + (answers.q36 || 0);
+            const autre6 = (answers.q14 || 0) + (answers.q25 || 0) + (answers.q26 || 0);
+            const total6 = soi6 + autre6;
+
+            const globalTotal = total1 + total2 + total3 + total4 + total5 + total6;
+
+            // Afficher les résultats
+            document.getElementById('soi1').textContent = soi1;
+            document.getElementById('autre1').textContent = autre1;
+            document.getElementById('total1').textContent = total1;
+
+            document.getElementById('soi2').textContent = soi2;
+            document.getElementById('autre2').textContent = autre2;
+            document.getElementById('total2').textContent = total2;
+
+            document.getElementById('soi3').textContent = soi3;
+            document.getElementById('autre3').textContent = autre3;
+            document.getElementById('total3').textContent = total3;
+
+            document.getElementById('soi4').textContent = soi4;
+            document.getElementById('autre4').textContent = autre4;
+            document.getElementById('total4').textContent = total4;
+
+            document.getElementById('soi5').textContent = soi5;
+            document.getElementById('autre5').textContent = autre5;
+            document.getElementById('total5').textContent = total5;
+
+            document.getElementById('soi6').textContent = soi6;
+            document.getElementById('autre6').textContent = autre6;
+            document.getElementById('total6').textContent = total6;
+
+            document.getElementById('globalTotal').textContent = globalTotal;
+
+            // Interprétation
+            const interpretationElement = document.getElementById('interpretation');
+            if (globalTotal >= 191) {
+                interpretationElement.textContent = "QE très élevé : Vous avez une excellente intelligence émotionnelle !";
+                interpretationElement.className = "interpretation high";
+            } else if (globalTotal >= 171) {
+                interpretationElement.textContent = "QE élevé : Vous gérez très bien vos émotions et celles des autres.";
+                interpretationElement.className = "interpretation high";
+            } else if (globalTotal >= 151) {
+                interpretationElement.textContent = "QE moyen : Vous avez une bonne intelligence émotionnelle, mais il y a des axes d'amélioration.";
+                interpretationElement.className = "interpretation medium";
+            } else if (globalTotal >= 61) {
+                interpretationElement.textContent = "QE bas : Travaillez sur la reconnaissance et la gestion de vos émotions.";
+                interpretationElement.className = "interpretation medium";
+            } else {
+                interpretationElement.textContent = "QE très bas : Il serait bénéfique de développer votre intelligence émotionnelle.";
+                interpretationElement.className = "interpretation low";
+            }
+
+            // Afficher les résultats
+            document.getElementById('results').style.display = 'block';
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</body>
+</html>
